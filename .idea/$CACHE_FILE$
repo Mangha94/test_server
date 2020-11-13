@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="D:/COINQ/COINQ" value="PREVIEW" />
+        <entry key="D:/PAYAPP/PAYAPP_LOCAL_TEST" value="PREVIEW" />
+        <entry key="D:/SMS_TEST/SMS_TEST" value="PREVIEW" />
+        <entry key="D:/coinq2/COINQ" value="PREVIEW" />
+        <entry key="E:/git/zipsa_push_server" value="PREVIEW" />
+        <entry key="E:/git/zipsa_server" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+</project>
