@@ -16,9 +16,9 @@ public class LoginCt {
 
     final private MemberSv memberSv;
 
-    @PostMapping("/login")
+    @PostMapping("/loginAct")
     public ApiResult doLogin(
-            @Valid @RequestBody LoginData loginData
+            @RequestBody LoginData loginData
     ){
         ApiResult apiResult = new ApiResult();
 
