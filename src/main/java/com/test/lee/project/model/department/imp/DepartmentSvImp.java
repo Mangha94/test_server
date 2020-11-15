@@ -1,6 +1,8 @@
 package com.test.lee.project.model.department.imp;
 
 import com.test.lee.project.common.MongoSupportSv;
+import com.test.lee.project.common.exception.DepartmentException;
+import com.test.lee.project.common.type.DepartmentExceptionType;
 import com.test.lee.project.model.department.DepartmentSv;
 import com.test.lee.project.model.department.data.Department;
 import com.test.lee.project.model.department.dto.RegistDepartment;
@@ -21,12 +23,13 @@ public class DepartmentSvImp implements DepartmentSv {
     final private MongoSupportSv mongoSupportSv;
 
     @Override
-    public Department insert(RegistDepartment registDepartment) {
+    public Department insert(RegistDepartment registDepartment)  throws DepartmentException{
 
         Department department = new Department();
 
         //todo 여기도 예외처리 하면 조을듯
-        if(codeChk(registDepartment.getCode())) return null;
+        if(codeChk(registDepartment.getCode()))
+            throw new DepartmentException(DepartmentExceptionType.SAME_CODE);
 
         //부모가 없다면 최상위, 순서는 맨끝
         if(registDepartment.getParent() == null){
@@ -67,12 +70,14 @@ public class DepartmentSvImp implements DepartmentSv {
     }
 
     @Override
-    public Department update(UpdateDepartment updateDepartment) {
+    public Department update(UpdateDepartment updateDepartment) throws DepartmentException {
         Department targetDepartment = new Department();
         targetDepartment = get(updateDepartment.getId());
-        if(targetDepartment == null) return null;
+        if(targetDepartment == null)
+            throw new DepartmentException(DepartmentExceptionType.NOT_DATA);
 
-        if(codeChk(updateDepartment.getCode())) return null;
+        if(codeChk(updateDepartment.getCode()))
+            throw new DepartmentException(DepartmentExceptionType.SAME_CODE);
 
         //코드가 바뀌었다, 하위 멤버들을 수정해준다.
         if(targetDepartment.getCode() != null){

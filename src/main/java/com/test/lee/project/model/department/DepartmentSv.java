@@ -1,5 +1,6 @@
 package com.test.lee.project.model.department;
 
+import com.test.lee.project.common.exception.DepartmentException;
 import com.test.lee.project.model.department.data.Department;
 import com.test.lee.project.model.department.dto.RegistDepartment;
 import com.test.lee.project.model.department.dto.UpdateDepartment;
@@ -14,21 +15,21 @@ public interface DepartmentSv {
      * @param registDepartment 추가 부서
      * @return 추가된 부서
      */
-    Department insert(RegistDepartment registDepartment);
+    Department insert(RegistDepartment registDepartment) throws DepartmentException;
 
     /**
      * 부서를 수정한다.
      * @param updateDepartment 수정 부서
      * @return 수정된 부서
      */
-    Department update(UpdateDepartment updateDepartment);
+    Department update(UpdateDepartment updateDepartment) throws DepartmentException;
 
     /**
      * 부서를 삭제 한다.
      * @param id 삭제할 부서 아이디
      * @return 삭제 여부
      */
-    boolean delete(String id);
+    boolean delete(String id) throws DepartmentException;
 
     /**
      * 부서 리스트

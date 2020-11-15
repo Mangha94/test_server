@@ -1,6 +1,7 @@
 package com.test.lee.project.controller;
 
 import com.test.lee.project.common.data.ApiResult;
+import com.test.lee.project.common.exception.DepartmentException;
 import com.test.lee.project.model.department.DepartmentSv;
 import com.test.lee.project.model.department.data.Department;
 import com.test.lee.project.model.department.dto.DepartmentContainer;
@@ -62,12 +63,14 @@ public class DepartmentCt {
     ){
         ApiResult result = new ApiResult();
 
-        Department department = departmentSv.insert(registDepartment);
+        Department department = null;
+        try {
+            department = departmentSv.insert(registDepartment);
 
-        if(department == null)
-            return result.fail("등록에 실패했습니다.", null);
-        else
             return result.success("등록되었습니다.", department);
+        } catch (DepartmentException e) {
+            return result.fail(e.getMessage(), null);
+        }
     }
 
     @PostMapping("/update")
@@ -76,12 +79,15 @@ public class DepartmentCt {
     ){
         ApiResult result = new ApiResult();
 
-        Department department = departmentSv.update(updateDepartment);
+        Department department = null;
+        try {
+            department = departmentSv.update(updateDepartment);
 
-        if(department == null)
-            return result.fail("수정에 실패했습니다.", null);
-        else
             return result.success("수정되었습니다.", department);
+        } catch (DepartmentException e) {
+            return result.fail(e.getMessage(), null);
+        }
+
     }
 
     @DeleteMapping("/delete/{id}")
@@ -90,10 +96,12 @@ public class DepartmentCt {
     ){
         ApiResult result = new ApiResult();
 
-        if(departmentSv.delete(id))
-            result.success("삭제되었습니다.");
-        else
-            result.fail("존재하지 않는 데이터 입니다.");
+        try {
+            if(departmentSv.delete(id))
+                result.success("삭제되었습니다.");
+        }catch (DepartmentException e){
+            result.fail(e.getMessage());
+        }
 
         return result;
     }
