@@ -29,7 +29,7 @@ public class MemberActionSvImp implements MemberActionSv {
                 searchData.setSpot(valueName);
                 memberUpdate.setSpot(valueName);
                 break;
-            case position:
+            case POSITION:
                 searchData.setPosition(valueName);
                 memberUpdate.setPosition(valueName);
                 break;
@@ -43,7 +43,7 @@ public class MemberActionSvImp implements MemberActionSv {
                     case SPOT:
                         m.setSpot(null);
                         break;
-                    case position:
+                    case POSITION:
                         m.setPosition(null);
                         break;
                 }

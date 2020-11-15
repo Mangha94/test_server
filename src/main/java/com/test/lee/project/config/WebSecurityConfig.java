@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/login", "/hello").permitAll().
+                .antMatchers("/login", "/*", "/hello").permitAll().
                         anyRequest().authenticated();
     }
 }

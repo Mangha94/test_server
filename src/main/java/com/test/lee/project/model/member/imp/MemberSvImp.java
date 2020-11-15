@@ -1,6 +1,7 @@
 package com.test.lee.project.model.member.imp;
 
 import com.test.lee.project.common.MongoSupportSv;
+import com.test.lee.project.lib.StrLib;
 import com.test.lee.project.model.member.MemberSv;
 import com.test.lee.project.model.member.data.Member;
 import com.test.lee.project.model.member.dto.LoginData;
@@ -8,6 +9,7 @@ import com.test.lee.project.model.member.dto.MemberUpdate;
 import com.test.lee.project.model.member.dto.RegistMember;
 import com.test.lee.project.model.member.searchData.MemberSearchData;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +24,17 @@ public class MemberSvImp implements MemberSv {
     final private MongoSupportSv mongoSupportSv;
 
     @Override
-    public boolean login(LoginData loginData){
+    public String login(LoginData loginData){
         Member member = memberRepository.findById(loginData.getMemberID()).orElse(null);
 
-        if(member == null) return false;
+        if(member == null) return null;
 
-        return BCrypt.checkpw(loginData.getPassword(), member.getPasswd());
+        if(!BCrypt.checkpw(loginData.getPassword(), member.getPasswd()))
+            return null;
+
+        String tempToken = StrLib.generateToken();
+
+        return Base64.encodeBase64String(tempToken.getBytes());
     }
 
     @Override
@@ -75,7 +82,7 @@ public class MemberSvImp implements MemberSv {
 
         if(member == null) return false;
 
-        memberRepository.deleteById(memberID);
+        memberRepository.delete(member);
         return true;
     }
 

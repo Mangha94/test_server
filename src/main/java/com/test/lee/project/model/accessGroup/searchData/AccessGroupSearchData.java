@@ -13,7 +13,7 @@ public class AccessGroupSearchData extends SearchDataForMongo {
     public Query makeQuery() {
         Criteria criteria = new Criteria();
 
-        makeQuery(criteria, name, "accessGroup.name", "REGEX", "");
+        makeQuery(criteria, name, "name", "REGEX", "");
 
         return makeQuery(criteria);
     }

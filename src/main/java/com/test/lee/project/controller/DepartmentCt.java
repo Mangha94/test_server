@@ -3,13 +3,18 @@ package com.test.lee.project.controller;
 import com.test.lee.project.common.data.ApiResult;
 import com.test.lee.project.model.department.DepartmentSv;
 import com.test.lee.project.model.department.data.Department;
+import com.test.lee.project.model.department.dto.DepartmentContainer;
 import com.test.lee.project.model.department.dto.RegistDepartment;
 import com.test.lee.project.model.department.dto.UpdateDepartment;
 import com.test.lee.project.model.department.searchData.DepartmentSearchData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +30,17 @@ public class DepartmentCt {
         ApiResult result = new ApiResult();
         List<Department> list = departmentSv.gets(searchData);
 
-        return result.success("success", list);
+        int maxLevel = list.stream().mapToInt(Department :: getLevel).max().orElse(0) + 1;
+
+        List<Department> temp = list.stream().filter(r -> r.getLevel() == 0).collect(Collectors.toList());
+
+        List<DepartmentContainer> set = new ArrayList<>();
+
+        temp.forEach(r -> {
+            set.add(new DepartmentContainer(r, list, maxLevel));
+        });
+
+        return result.success("success", set);
     }
 
     @GetMapping("detail/{id}")

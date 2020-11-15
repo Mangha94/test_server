@@ -19,8 +19,8 @@ public class DepartmentSearchData extends SearchDataForMongo {
     public Query makeQuery() {
         Criteria criteria = new Criteria();
 
-        makeQuery(criteria, parent, "department.parent", "IS", "");
-        makeQuery(criteria, String.valueOf(seq), "department.seq", "GTE", "");
+        makeQuery(criteria, parent, "parent", "IS", "");
+        makeQuery(criteria, String.valueOf(seq), "seq", "GTE", "");
 
         return makeQuery(criteria);
     }

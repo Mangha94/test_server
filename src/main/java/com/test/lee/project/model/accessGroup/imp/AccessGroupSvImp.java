@@ -51,7 +51,7 @@ public class AccessGroupSvImp implements AccessGroupSv {
 
         if(accessGroup == null) return false;
 
-        accessGroupRepository.deleteById(id);
+        accessGroupRepository.delete(accessGroup);
 
         return true;
     }

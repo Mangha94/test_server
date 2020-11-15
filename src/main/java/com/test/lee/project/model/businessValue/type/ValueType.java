@@ -9,5 +9,5 @@ public enum ValueType {
     /**
      * 직책
      */
-    position
+    POSITION
 }

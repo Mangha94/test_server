@@ -43,5 +43,4 @@ public interface DepartmentSv {
      * @return 부서
      */
     Department get(String id);
-
 }

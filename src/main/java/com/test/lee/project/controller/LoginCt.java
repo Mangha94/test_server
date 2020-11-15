@@ -22,8 +22,10 @@ public class LoginCt {
     ){
         ApiResult apiResult = new ApiResult();
 
-        if(memberSv.login(loginData))
-            apiResult.success("success");
+        String token = memberSv.login(loginData);
+
+        if(token != null)
+            apiResult.success("success", token);
         else
             apiResult.fail("로그인에 실패했습니다.");
 

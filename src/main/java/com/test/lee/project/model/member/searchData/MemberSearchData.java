@@ -23,10 +23,10 @@ public class MemberSearchData extends SearchDataForMongo {
     public Query makeQuery() {
         Criteria criteria = new Criteria();
 
-        makeQuery(criteria, memberID, "member.id", "REGEX", "");
-        makeQuery(criteria, phone, "member.memberName", "REGEX", "");
-        makeQuery(criteria, spot, "member.spot", "IS", "");
-        makeQuery(criteria, position, "member.position", "IS", "");
+        makeQuery(criteria, memberID, "id", "REGEX", "");
+        makeQuery(criteria, phone, "memberName", "REGEX", "");
+        makeQuery(criteria, spot, "spot", "IS", "");
+        makeQuery(criteria, position, "position", "IS", "");
 
         return makeQuery(criteria);
     }

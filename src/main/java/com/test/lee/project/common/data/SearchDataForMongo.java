@@ -3,6 +3,7 @@ package com.test.lee.project.common.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.test.lee.project.lib.StrLib;
+import com.test.lee.project.model.businessValue.type.ValueType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -381,7 +382,10 @@ public class SearchDataForMongo
 
 			if(where.equals("IS"))
 			{
-				makeCriteria (criteria, field).is(value);
+				Object enumObj = null;
+				if(fieldType.equals("ENUM"))
+					enumObj = stringToEnum(field, value);
+				makeCriteria (criteria, field).is((enumObj != null ? enumObj : value));
 
 			}
 			else if (where.equals("REGEX"))
@@ -451,5 +455,14 @@ public class SearchDataForMongo
 			criteria = makeCriteria (criteria, fieldName).regex (likeVal);
 
 		return criteria;
+	}
+
+	private Object stringToEnum(String field, String value){
+		switch (field){
+			case "valueType":
+				return ValueType.valueOf(value);
+		}
+
+		return null;
 	}
 }

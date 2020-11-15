@@ -47,7 +47,7 @@ public class BusinessValueSvImp implements BusinessValueSv {
 
         if(businessValue == null) return false;
 
-        businessValueRepository.deleteById(id);
+        businessValueRepository.delete(businessValue);
 
         //해당 벨류인 멤버들 수정해야함
         memberActionSv.changeValue(businessValue.getName(), businessValue.getValueType(), true);

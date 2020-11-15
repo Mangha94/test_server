@@ -25,6 +25,9 @@ public class DepartmentSvImp implements DepartmentSv {
 
         Department department = new Department();
 
+        //todo 여기도 예외처리 하면 조을듯
+        if(codeChk(registDepartment.getCode())) return null;
+
         //부모가 없다면 최상위, 순서는 맨끝
         if(registDepartment.getParent() == null){
             registDepartment.setSeq((int) departmentRepository.count());
@@ -65,15 +68,15 @@ public class DepartmentSvImp implements DepartmentSv {
 
     @Override
     public Department update(UpdateDepartment updateDepartment) {
-
-        Department targetDepartment = get(updateDepartment.getId());
+        Department targetDepartment = new Department();
+        targetDepartment = get(updateDepartment.getId());
         if(targetDepartment == null) return null;
 
-        Department saveDepartment = departmentRepository.save(targetDepartment.setData(targetDepartment, updateDepartment));
+        if(codeChk(updateDepartment.getCode())) return null;
 
         //코드가 바뀌었다, 하위 멤버들을 수정해준다.
-        if(updateDepartment.getCode() != null){
-            List<Department> list = departmentRepository.findByParent(targetDepartment.getParent());
+        if(targetDepartment.getCode() != null){
+            List<Department> list = departmentRepository.findByParent(targetDepartment.getCode());
 
             list.forEach(r -> {
                 r.setParent(updateDepartment.getCode());
@@ -81,7 +84,7 @@ public class DepartmentSvImp implements DepartmentSv {
             });
         }
 
-        return saveDepartment;
+        return departmentRepository.save(targetDepartment.setData(targetDepartment, updateDepartment));
     }
 
     @Override
@@ -93,12 +96,12 @@ public class DepartmentSvImp implements DepartmentSv {
         //삭제하려는 부서가 존재하지 않음
         if(deleteDepartment == null) return false;
 
-        List<Department> list = departmentRepository.findByParent(deleteDepartment.getParent());
+        List<Department> list = departmentRepository.findByParent(deleteDepartment.getCode());
 
         //삭제하려는 부서에 자식이 있음
         if(list.size() > 0) return false;
 
-        departmentRepository.deleteById(id);
+        departmentRepository.delete(deleteDepartment);
 
         //삭제 완료후 비어있는 seq 를 채워준다.
         DepartmentSearchData searchData = new DepartmentSearchData();
@@ -124,5 +127,10 @@ public class DepartmentSvImp implements DepartmentSv {
     @Override
     public Department get(String id){
         return departmentRepository.findById(id).orElse(null);
+    }
+
+    private boolean codeChk(String code){
+        Department department = departmentRepository.findByCode(code);
+        return department != null;
     }
 }

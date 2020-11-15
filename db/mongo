@@ -1,4 +1,4 @@
-db.createCollection( "member", { capped: true, size: 100000 } )
-db.createCollection( "accessGroup", { capped: true, size: 100000 } )
-db.createCollection( "businessValue", { capped: true, size: 100000 } )
-db.createCollection( "department", { capped: true, size: 100000 } )
+db.createCollection( "member", { capped: false, size: 100000 } )
+db.createCollection( "accessGroup", { capped: false, size: 100000 } )
+db.createCollection( "businessValue", { capped: false, size: 100000 } )
+db.createCollection( "department", { capped: false, size: 100000 } )

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MemberSv {
 
-    boolean login(LoginData loginData);
+    String login(LoginData loginData);
 
     /**
      * 멤버를 가지고 온다

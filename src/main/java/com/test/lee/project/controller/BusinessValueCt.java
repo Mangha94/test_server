@@ -27,7 +27,7 @@ public class BusinessValueCt {
         if(list.size() > 0)
             return result.success("success", list);
         else
-            return result.fail("등록된 정보가 없습니다.", null);
+            return result.success("등록된 정보가 없습니다.", null);
     }
 
     @GetMapping("/detail/{id}")

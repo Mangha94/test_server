@@ -18,7 +18,7 @@ public class ValueSearchData extends SearchDataForMongo {
     public Query makeQuery() {
         Criteria criteria = new Criteria();
 
-        makeQuery(criteria, valueType, "business.valueType", "IS", "");
+        makeQuery(criteria, valueType, "valueType", "IS", "ENUM");
 
         return makeQuery(criteria);
     }
